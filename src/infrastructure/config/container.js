@@ -1,19 +1,37 @@
+// --- IMPORTACIONES ---
 import MongoAnimalRepository from "../repositories/MongoAnimalRepository.js"; 
-import CreateAnimal from "../../application/usecases/CreateAnimal.js";
-import GetAllAnimals from "../../application/usecases/GetAllAnimals.js";
-import AnimalController from "../controllers/animalController.js";
+import CreateAnimal from "../../application/usecases/usecasesanimals/CreateAnimal.js";
+import GetAllAnimals from "../../application/usecases/usecasesanimals/GetAllAnimals.js";
+import AnimalController from "../controllers/animalController.js"; 
 
-// 1. Repositorio
-const repository = new MongoAnimalRepository();
+import MongoDueñoRepository from "../repositories/MongoDueñoRepository.js"; 
+import CreateDueño from "../../application/usecases/usecasesanimals/usecasesdueños/CreateDueño.js";
+import GetAllDueños from "../../application/usecases/usecasesanimals/usecasesdueños/GetAllDueños.js";
+import DueñoController from "../controllers/dueñoController.js";
 
-// 2. Use cases
-const createAnimal = new CreateAnimal(repository);
-const getAllAnimals = new GetAllAnimals(repository);
+// --- 1. REPOSITORIOS (Dales nombres únicos) ---
+const animalRepository = new MongoAnimalRepository();
+const dueñoRepository = new MongoDueñoRepository();
 
-// 3. Controller
+// --- 2. CASOS DE USO (Inyecta el repositorio correspondiente) ---
+// Animales
+const createAnimal = new CreateAnimal(animalRepository);
+const getAllAnimals = new GetAllAnimals(animalRepository);
+
+// Dueños
+const createDueño = new CreateDueño(dueñoRepository);
+const getAllDueños = new GetAllDueños(dueñoRepository);
+
+// --- 3. CONTROLADORES ---
 const animalController = new AnimalController({
   createAnimal,
   getAllAnimals,
 });
 
-export { animalController };
+const dueñoController = new DueñoController({
+  createDueño,
+  getAllDueños,
+});
+
+// --- 4. EXPORTACIÓN ---
+export { animalController, dueñoController };
