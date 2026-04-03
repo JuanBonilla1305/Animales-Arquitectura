@@ -1,4 +1,4 @@
-import Dueño from "../../../../domain/entities/dueño.js";
+import Dueño from "../../../domain/entities/dueño.js";
 
 export default class CreateDueño  {
   constructor(dueñoRepository) {
